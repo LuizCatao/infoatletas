@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}InfoAtletas{% endblock %} | InfoAtletas</title>
+    <link rel="stylesheet" href="{% static 'atletas/css/estilo.css' %}">
+</head>
+<body>
+    <header class="topo">
+        <a href="{% url 'lista_atletas' %}" class="logo">InfoAtletas</a>
+        <span>Estatísticas em Copas do Mundo e Olimpíadas</span>
+    </header>
+    <main class="container">
+        {% block conteudo %}{% endblock %}
+    </main>
+</body>
+</html>

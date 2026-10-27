@@ -1,0 +1,55 @@
+{% extends 'atletas/base.html' %}
+{% load static %}
+
+{% block titulo %}{{ atleta.nome }}{% endblock %}
+
+{% block conteudo %}
+<a class="voltar" href="{% url 'lista_atletas' %}">Voltar</a>
+
+<section class="perfil">
+    <div class="info">
+        <h1>{{ atleta.nome }}</h1>
+        <span class="etiqueta">{{ atleta.id_esporte.nome }}</span>
+        {% if desempenho %}
+            <p>{{ desempenho.id_torneio.nome }}</p>
+            <a class="botao" href="{% url 'editar_estatisticas' atleta.id_atleta %}">Editar estatísticas</a>
+        {% endif %}
+        <a class="botao" href="{% url 'editar_atleta' atleta.id_atleta %}">Editar nome</a>
+        <a class="botao perigo" href="{% url 'excluir_atleta' atleta.id_atleta %}">Excluir atleta</a>
+    </div>
+
+    <div class="foto grande">
+        <span>{{ atleta.nome|first }}</span>
+        <img src="{% static 'atletas/fotos/' %}{{ atleta.id_atleta }}.jpg" alt="{{ atleta.nome }}" onerror="this.remove()">
+    </div>
+</section>
+
+{% if desempenho %}
+<div class="estatisticas">
+    {% for campo, nome_campo, valor in estatisticas %}
+    <div class="stat">
+        <div class="nome">{{ nome_campo }}</div>
+        <div class="valor">{{ valor|default_if_none:"-" }}</div>
+        <form method="post" action="{% url 'ajustar_estatistica' atleta.id_atleta %}">
+            {% csrf_token %}
+            <input type="hidden" name="campo" value="{{ campo }}">
+            <button type="submit" name="acao" value="menos">-1</button>
+            <button type="submit" name="acao" value="mais">+1</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="formulario">
+    <p>Esse atleta ainda não tem estatísticas cadastradas.</p>
+    {% if torneio %}
+    <form method="post" action="{% url 'criar_estatisticas' atleta.id_atleta %}">
+        {% csrf_token %}
+        <button type="submit" class="botao">Criar estatísticas ({{ torneio.nome }})</button>
+    </form>
+    {% else %}
+    <p>Esse esporte ainda não tem torneio cadastrado. Cadastra um pelo /admin e volta aqui.</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

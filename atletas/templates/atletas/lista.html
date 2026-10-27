@@ -1,0 +1,23 @@
+{% extends 'atletas/base.html' %}
+{% load static %}
+
+{% block titulo %}Atletas{% endblock %}
+
+{% block conteudo %}
+<div class="barra">
+    <h1>Atletas</h1>
+    <a class="botao" href="{% url 'cadastrar_atleta' %}">Novo atleta</a>
+</div>
+<div class="grade">
+    {% for atleta in atletas %}
+    <a class="card" href="{% url 'detalhe_atleta' atleta.id_atleta %}">
+        <div class="foto">
+            <span>{{ atleta.nome|first }}</span>
+            <img src="{% static 'atletas/fotos/' %}{{ atleta.id_atleta }}.jpg" alt="{{ atleta.nome }}" onerror="this.remove()">
+        </div>
+        <h2>{{ atleta.nome }}</h2>
+        <span class="etiqueta">{{ atleta.id_esporte.nome }}</span>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

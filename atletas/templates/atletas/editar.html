@@ -1,0 +1,14 @@
+{% extends 'atletas/base.html' %}
+
+{% block titulo %}Editar {{ atleta.nome }}{% endblock %}
+
+{% block conteudo %}
+<a class="voltar" href="{% url 'detalhe_atleta' atleta.id_atleta %}">Cancelar</a>
+<h1 class="titulo-pagina">Editar estatísticas de {{ atleta.nome }}</h1>
+
+<form method="post" class="formulario">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="botao">Salvar</button>
+</form>
+{% endblock %}

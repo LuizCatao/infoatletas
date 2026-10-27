@@ -1,0 +1,14 @@
+{% extends 'atletas/base.html' %}
+
+{% block titulo %}Novo atleta{% endblock %}
+
+{% block conteudo %}
+<a class="voltar" href="{% url 'lista_atletas' %}">Cancelar</a>
+<h1 class="titulo-pagina">Novo atleta</h1>
+
+<form method="post" class="formulario">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="botao">Cadastrar</button>
+</form>
+{% endblock %}

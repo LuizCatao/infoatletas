@@ -1,0 +1,15 @@
+{% extends 'atletas/base.html' %}
+
+{% block titulo %}Excluir {{ atleta.nome }}{% endblock %}
+
+{% block conteudo %}
+<a class="voltar" href="{% url 'detalhe_atleta' atleta.id_atleta %}">Cancelar</a>
+<h1 class="titulo-pagina">Excluir atleta</h1>
+
+<form method="post" class="formulario">
+    {% csrf_token %}
+    <p>Tem certeza que quer excluir <strong>{{ atleta.nome }}</strong>? As estatísticas dele também serão apagadas e isso não dá pra desfazer.</p>
+    <button type="submit" class="botao perigo">Sim, excluir</button>
+    <a class="voltar" href="{% url 'detalhe_atleta' atleta.id_atleta %}">Não, voltar</a>
+</form>
+{% endblock %}
